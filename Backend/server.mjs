@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 
 // Serve static files from the "public" folder
 const __dirname = path.resolve(); // Get the current directory (needed in ES modules)
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "../public")));
 
 // Serve the frontend for the root route
 app.get("/", (req, res) => {
