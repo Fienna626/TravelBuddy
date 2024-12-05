@@ -2,12 +2,15 @@ import express from "express";
 import bodyParser from "body-parser";
 import path from "path"; // To handle file paths
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 const PORT = 3000;
 
 // Initialize Google Generative AI SDK
-const genAI = new GoogleGenerativeAI("AIzaSyA2bxChykO34yFGa7mglOUIpr9C3o84tKw");
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 
 // Middleware to parse JSON bodies
 app.use(bodyParser.json());
@@ -18,14 +21,6 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Serve the frontend for the root route
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "home.html"));
-});
-
-app.get("/home", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "home.html"));
-});
-
-app.get("/generator", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
