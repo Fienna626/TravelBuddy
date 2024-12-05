@@ -1,3 +1,4 @@
+// Handle form submission to generate itinerary
 document.getElementById("form-container").addEventListener("submit", async function (event) {
   event.preventDefault(); // Prevent default form submission behavior
 
@@ -67,3 +68,25 @@ document.getElementById("form-container").addEventListener("submit", async funct
     alert("An error occurred. Please try again.");
   }
 });
+
+// Smooth Scroll functionality for the button
+document.querySelector('.button').addEventListener('click', function(e) {
+  e.preventDefault();
+  document.querySelector('.container').scrollIntoView({
+    behavior: 'smooth',
+    block: 'start',
+  });
+});
+
+// Handle button animation with anime.js
+var basicTimeline = anime.timeline({
+  autoplay: false
+});
+
+// Initialize path elements for stroke dashoffset animation
+var pathEls = $(".check");
+for (var i = 0; i < pathEls.length; i++) {
+  var pathEl = pathEls[i];
+  var offset = anime.setDashoffset(pathEl);
+  pathEl.setAttribute("stroke-dashoffset", offset);
+}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel Planner</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="home-page">
+  <header class="navbar">
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#generator">Generator</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero Section (Title Screen) -->
+    <section id="home" class="hero-section">
+      <div class="hero-content">
+        <h1 class="hero-content__title">Travel Flow</h1>
+        <h2> Your personalized itinerary planner!</h2>
+        <a id="button-1" class="button" href="#">Let's Go!<img id="arrow-hover" src="https://github.com/atloomer/atloomer.github.io/blob/master/img/iconmonstr-paper-plane-1-120.png?raw=true"/></a>
+      </div>
+    </section>
+
+    <!-- Generator Section -->
+    <section id="generator" class="generator-page">
+      <div class="container">
+        <h1>Plan Your Perfect Trip</h1>
+        <form id="form-container">
+          <label for="destination">Destination:</label>
+          <input type="text" id="destination" name="destination" required>
+
+          <label for="days">Number of Days:</label>
+          <input type="number" id="days" name="days" required>
+
+          <label for="people">Number of People:</label>
+          <input type="number" id="people" name="people" required>
+
+          <label for="desiredFocus">Desired Focus</label>
+          <input type="text" id="desiredFocus" name="desiredFocus" placeholder="e.g. adventure, sightseeing, anime-related ventures">
+
+          <label for="budget">Budget</label>
+          <input type="text" id="budget" name="budget" placeholder="$2,000 - $5,000 USD" required>
+
+          <label for="season">Season</label>
+          <select id="season" name="season" required>
+            <option value="" disabled selected>Select a season</option>
+            <option value="Spring">Spring</option>
+            <option value="Summer">Summer</option>
+            <option value="Fall">Fall</option>
+            <option value="Winter">Winter</option>
+          </select>
+        
+          <button type="submit">Generate Itinerary</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Smooth scroll to the generator section
+    function scrollToGenerator() {
+      document.getElementById('generator').scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  </script>
+  
+  <script src="script.js"></script>
+</body>
+</html>

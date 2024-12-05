@@ -18,6 +18,14 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Serve the frontend for the root route
 app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "home.html"));
+});
+
+app.get("/home", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "home.html"));
+});
+
+app.get("/generator", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
