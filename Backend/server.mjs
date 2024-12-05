@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Initialize Google Generative AI SDK
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
@@ -38,15 +38,18 @@ app.post("/generate-itinerary", async (req, res) => {
     // Step 3: Construct the prompt
     const prompt = `
       You are a professional travel planner with expertise in crafting detailed and personalized itineraries. 
-      Plan a ${days}-day itinerary for ${people} people in ${destination}, considering the ${budget}, preferences, time constraints, and season of travel. 
+      Plan a ${days}-day itinerary for ${people} people in ${destination}, considering the ${budget}, 
+      preferences, time constraints, and season of travel. 
       The focus of the trip is ${desiredFocus}. The season is ${season}. The budget is ${budget}.
-      Include flights, hotel check-ins, and daily activities that align with the focus and season, and make sure they are fun and manageable for a group of ${people} people.
+      Include flights, hotel check-ins, and daily activities that align with the focus and season, 
+      and make sure they are fun and manageable for a group of ${people} people.
 
       Here are a few examples of itineraries that meet the needs of the user. Follow this pattern when creating a new itinerary.
       
       Destination: Japan (Kyoto & Tokyo)
       Days: 4
       People: 2
+      Focus: Culture and Sights
 
       Itinerary:
 
