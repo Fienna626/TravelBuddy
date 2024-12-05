@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, "../public")));
 
 // Serve the frontend for the root route
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(path.join(__dirname, "../index.html"));
 });
 
 // Route to handle itinerary generation
@@ -48,7 +48,7 @@ app.post("/generate-itinerary", async (req, res) => {
       Days: 4
       People: 2
 
-      Itinerary:
+      Focus:
 
       **Day 1: Arrival in Kyoto & Gion Charm (Budget: $300)**
 
