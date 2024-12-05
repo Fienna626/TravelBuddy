@@ -7,7 +7,7 @@ const app = express();
 const PORT = 3000;
 
 // Initialize Google Generative AI SDK
-const genAI = new GoogleGenerativeAI("AIzaSyA2bxChykO34yFGa7mglOUIpr9C3o84tKw");
+const genAI = new GoogleGenerativeAI("YourAPI");
 
 // Middleware to parse JSON bodies
 app.use(bodyParser.json());
