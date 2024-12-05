@@ -72,7 +72,7 @@ document.getElementById("form-container").addEventListener("submit", async funct
 // Smooth Scroll functionality for the button
 document.querySelector('.button').addEventListener('click', function(e) {
   e.preventDefault();
-  document.querySelector('.container').scrollIntoView({
+  document.querySelector('#generator').scrollIntoView({
     behavior: 'smooth',
     block: 'start',
   });
