@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import path from "path"; // To handle file paths
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import dotenv from "dotenv";
+import { fileURLToPath } from "url"; // <-- Import this
 
 dotenv.config();
 
@@ -16,12 +17,15 @@ const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 app.use(bodyParser.json());
 
 // Serve static files from the "public" folder
-const __dirname = path.resolve(); // Get the current directory (needed in ES modules)
-app.use(express.static(path.join(__dirname, "../public")));
+const __filename = fileURLToPath(import.meta.url); // <-- Fix for ES module
+const __dirname = path.dirname(__filename); // <-- Get directory name of the current file
+
+// Serve static files (this points to your root folder)
+app.use(express.static(path.join(__dirname, "../"))); 
 
 // Serve the frontend for the root route
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../index.html"));
+  res.sendFile(path.join(__dirname, "../index.html")); // Correct path to index.html
 });
 
 // Route to handle itinerary generation
@@ -78,7 +82,6 @@ app.post("/generate-itinerary", async (req, res) => {
 
       Plan a ${days}-day itinerary for ${people} people in ${destination}. Include the same structure and level of detail as the examples above, and tailor it to focus on ${desiredFocus}, taking the season ${season} and ${budget} into account.
     `;
-
     // Step 4: Log the generated prompt
     console.log("Generated Prompt:", prompt);
 

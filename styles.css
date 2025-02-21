@@ -17,7 +17,7 @@ body {
 /* Homepage Styles */
 .home-page {
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-    url('images/beach.gif'); /* Background image */
+    url('public/beach.gif'); /* Background image */
   background-size: cover;
   background-position: center;
   background-attachment: fixed; /* Fix background while scrolling */
