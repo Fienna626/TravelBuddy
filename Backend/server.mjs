@@ -1,3 +1,4 @@
+
 import express from "express";
 import bodyParser from "body-parser";
 import path from "path"; // To handle file paths
@@ -5,12 +6,13 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import dotenv from "dotenv";
 import { fileURLToPath } from "url"; // <-- Import this
 
-dotenv.config();
+dotenv.config({ path: '../.env' });
 
 const app = express();
 const PORT = 3000;
 
 // Initialize Google Generative AI SDK
+console.log("Google API Key:", process.env.GOOGLE_API_KEY); // Add this to check
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 
 // Middleware to parse JSON bodies
