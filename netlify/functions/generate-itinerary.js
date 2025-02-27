@@ -1,10 +1,81 @@
+import { GoogleGenerativeAI } from '@google/generative-ai'; // Assuming you're using Google Generative AI SDK
+import dotenv from 'dotenv';
+
+// Load environment variables
+dotenv.config();
+
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY); // Initialize the Google Generative AI SDK
+
 exports.handler = async (event) => {
+  try {
+    // Parse incoming request body
     const { destination, days, people, desiredFocus, budget, season } = JSON.parse(event.body);
-  
-    const itinerary = `Your trip to ${destination} for ${days} days with ${people} people focusing on ${desiredFocus}. Budget: ${budget}, Season: ${season}.`;
+
+    // Construct the prompt for generating the itinerary
+    const prompt = `
+      You are a professional travel planner with expertise in crafting detailed and personalized itineraries. 
+      Plan a ${days}-day itinerary for ${people} people in ${destination}, considering the ${budget}, preferences, time constraints, and season of travel. 
+      The focus of the trip is ${desiredFocus}. The season is ${season}. The budget is ${budget}.
+      Include flights, hotel check-ins, and daily activities that align with the focus and season, and make sure they are fun and manageable for a group of ${people} people.
+
+      Here are a few examples of itineraries that meet the needs of the user. Follow this pattern when creating a new itinerary.
+      
+      Destination: Japan (Kyoto & Tokyo)
+      Days: 4
+      People: 2
+
+      Focus:
+
+      **Day 1: Arrival in Kyoto & Gion Charm (Budget: $300)**
+
+      * 10:00 AM: Arrive at Kansai International Airport (KIX).
+      Take the Haruka Express train to Kyoto Station (~75 mins).
+      * 11:30 AM: Check in to a traditional Ryokan in Gion (e.g.,  Gion Hatanaka).
+      Ryokans offer a unique cultural experience.
+      Pre-booking is essential, especially during peak spring season.
+      * 1:00 PM: Lunch at a local restaurant near Gion, trying some Kyo-ryori (Kyoto cuisine).
+      * 2:30 PM: Explore Gion, Kyoto's geisha district.
+      Stroll through the charming streets, admire the wooden machiya houses, and perhaps catch a glimpse of a geisha or maiko (apprentice geisha).
+      * 5:00 PM: Visit Kiyomizu-dera Temple, a beautiful wooden temple with stunning views of Kyoto.
+      * 7:00 PM: Dinner at a restaurant in Gion, enjoying traditional Kaiseki cuisine (multi-course Japanese haute cuisine, slightly more expensive option).
+
+
+      **Day 2: Bamboo Forest & Golden Pavilion (Budget: $250)**
+
+      * 9:00 AM: Take a bus or taxi to Arashiyama Bamboo Grove.
+      Enjoy a peaceful walk through the towering bamboo stalks.
+      * 11:00 AM: Visit Tenryu-ji Temple, a beautiful Zen temple in Arashiyama.
+      * 1:00 PM: Lunch at a restaurant in Arashiyama, perhaps trying some local ramen or soba noodles.
+      * 2:30 PM: Take a bus or train to Kinkaku-ji (Golden Pavilion).
+      Admire the shimmering gold-leaf covered temple reflecting in the pond.
+      * 4:30 PM: Visit Ryoan-ji Temple, famous for its Zen rock garden.
+      * 6:00 PM: Return to Gion.
+      Dinner at a more casual restaurant.
+
+      Plan a ${days}-day itinerary for ${people} people in ${destination}. Include the same structure and level of detail as the examples above, and tailor it to focus on ${desiredFocus}, taking the season ${season} and ${budget} into account.
+    `;
+
+    // Call the Google Generative AI API to generate the itinerary
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' }); // Adjust based on your API model
+    const result = await model.generateContent(prompt);
+
+    // Get the result from the API response
+    const rawText = await result.response.text();
+
+    // Format the result (optional)
+    const formattedItinerary = rawText.replace(/\. /g, ".\n"); // Formatting for readability
+
+    // Return the generated itinerary as JSON
     return {
       statusCode: 200,
-      body: JSON.stringify({ itinerary })
+      body: JSON.stringify({ itinerary: formattedItinerary })
     };
-  };
-  
+
+  } catch (error) {
+    console.error('Error generating itinerary:', error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: 'An error occurred while generating the itinerary.' })
+    };
+  }
+};
