@@ -18,7 +18,7 @@ document.getElementById("form-container").addEventListener("submit", async funct
   }
 
   try {
-    const response = await fetch("/generate-itinerary", {
+    const response = await fetch("/.netlify/functions/generate-itinerary", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ destination, days, people, desiredFocus, budget, season }),
