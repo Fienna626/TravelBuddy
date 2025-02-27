@@ -31,7 +31,7 @@ app.get("/", (req, res) => {
 });
 
 // Route to handle itinerary generation
-app.post("/generate-itinerary", async (req, res) => {
+app.post("/.netlify/functions/generate-itinerary", async (req, res) => {
   try {
     const { destination, days, people, desiredFocus, season, budget } = req.body; // Add season
 
